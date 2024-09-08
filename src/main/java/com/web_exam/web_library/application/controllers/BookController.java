@@ -3,7 +3,9 @@ package com.web_exam.web_library.application.controllers;
 import com.web_exam.web_library.application.messages.MessagesSuccess;
 import com.web_exam.web_library.domain.facades.BookFacade;
 import com.web_exam.web_library.domain.model.Book;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -14,15 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/books")
+@AllArgsConstructor
 public class BookController {
 
     private final BookFacade bookFacade;
-
-    public BookController(BookFacade bookFacade) {
-        this.bookFacade = bookFacade;
-    }
 
     @GetMapping("/new")
     public ModelAndView newBook(@RequestParam(name = "id", required = false) Long id, Book book,
@@ -48,7 +49,7 @@ public class BookController {
         ModelAndView mv = new ModelAndView();
         try {
             bookFacade.saveBook(book);
-            mv.setViewName("redirect:/books/new");
+            mv.setViewName("redirect:/books");
             attributes.addFlashAttribute("message", MessagesSuccess.BOOK_CREATED.getMessage());
         } catch (Exception e) {
             attributes.addFlashAttribute("alert", e.getMessage());
@@ -94,5 +95,10 @@ public class BookController {
             attributes.addFlashAttribute("alert", e.getMessage());
         }
         return mv;
+    }
+
+    @GetMapping("/rest-search")
+    public ResponseEntity<List<Book>> searchBooks(@RequestParam("query") String query) {
+        return ResponseEntity.ok(bookFacade.searchBooks(query));
     }
 }

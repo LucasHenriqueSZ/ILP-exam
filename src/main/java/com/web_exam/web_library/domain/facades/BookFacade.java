@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class BookFacade {
@@ -15,6 +17,7 @@ public class BookFacade {
     private final AllBooks allBooks;
     private final DeleteBook deleteBook;
     private final FindBookById findBookById;
+    private final SearchBooks searchBooks;
 
     public void saveBook(Book book) {
         newBook.execute(book);
@@ -34,5 +37,9 @@ public class BookFacade {
 
     public void editBook(Book book) {
         editBook.execute(book);
+    }
+
+    public List<Book> searchBooks(String query) {
+        return searchBooks.execute(query);
     }
 }
