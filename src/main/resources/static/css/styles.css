@@ -59,3 +59,18 @@ body {
     border-color: #2a2c23;
     color: #ffffff;
 }
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.col-book-title {
+    max-width: 150px; /* Ajuste conforme necessário */
+}
+.col-borrower-name {
+    max-width: 150px; /* Ajuste conforme necessário */
+}
+td, th {
+    vertical-align: middle;
+}
