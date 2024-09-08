@@ -25,9 +25,17 @@ public class BookController {
     }
 
     @GetMapping("/new")
-    public ModelAndView newBook(Book book) {
+    public ModelAndView newBook(@RequestParam(name = "id", required = false) Long id, Book book,
+                                RedirectAttributes attributes) {
+
         ModelAndView mv = new ModelAndView("new_book");
-        mv.addObject("book", book);
+        try {
+            Book currentBook = (id != null) ? bookFacade.findBookById(id) : book;
+            mv.addObject("book", currentBook);
+        } catch (Exception e) {
+            attributes.addFlashAttribute("alert", e.getMessage());
+            mv.setViewName("redirect:/books");
+        }
         return mv;
     }
 
@@ -35,7 +43,7 @@ public class BookController {
     public ModelAndView createBook(@Validated Book book, BindingResult br,
                                    RedirectAttributes attributes) {
         if (br.hasErrors()) {
-            return newBook(book);
+            return newBook(null, book, attributes);
         }
         ModelAndView mv = new ModelAndView();
         try {
@@ -45,6 +53,24 @@ public class BookController {
         } catch (Exception e) {
             attributes.addFlashAttribute("alert", e.getMessage());
             mv.setViewName("redirect:/books/new");
+        }
+        return mv;
+    }
+
+    @PostMapping("/edit")
+    public ModelAndView editBook(@Validated Book book, BindingResult br,
+                                 RedirectAttributes attributes) {
+        if (br.hasErrors()) {
+            return newBook(null, book, attributes);
+        }
+        ModelAndView mv = new ModelAndView();
+        try {
+            bookFacade.editBook(book);
+            mv.setViewName("redirect:/books");
+            attributes.addFlashAttribute("message", MessagesSuccess.BOOK_UPDATED.getMessage());
+        } catch (Exception e) {
+            attributes.addFlashAttribute("alert", e.getMessage());
+            mv.setViewName("redirect:/books");
         }
         return mv;
     }

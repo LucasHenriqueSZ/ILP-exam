@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MessagesSuccess {
     BOOK_CREATED("Livro cadastrado com sucesso."),
-    BOOK_DELETED("Livro excluído com sucesso.");
+    BOOK_DELETED("Livro excluído com sucesso."),
+    BOOK_UPDATED("Livro atualizado com sucesso.");
 
     private final String message;
 }

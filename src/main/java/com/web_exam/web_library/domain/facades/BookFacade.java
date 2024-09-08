@@ -1,9 +1,7 @@
 package com.web_exam.web_library.domain.facades;
 
 import com.web_exam.web_library.domain.model.Book;
-import com.web_exam.web_library.domain.useCases.book.AllBooks;
-import com.web_exam.web_library.domain.useCases.book.DeleteBook;
-import com.web_exam.web_library.domain.useCases.book.NewBook;
+import com.web_exam.web_library.domain.useCases.book.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -13,8 +11,10 @@ import org.springframework.stereotype.Component;
 public class BookFacade {
 
     private final NewBook newBook;
+    private final EditBook editBook;
     private final AllBooks allBooks;
     private final DeleteBook deleteBook;
+    private final FindBookById findBookById;
 
     public void saveBook(Book book) {
         newBook.execute(book);
@@ -26,5 +26,13 @@ public class BookFacade {
 
     public void deleteBook(Long id) {
         deleteBook.execute(id);
+    }
+
+    public Book findBookById(Long id) {
+        return findBookById.execute(id);
+    }
+
+    public void editBook(Book book) {
+        editBook.execute(book);
     }
 }

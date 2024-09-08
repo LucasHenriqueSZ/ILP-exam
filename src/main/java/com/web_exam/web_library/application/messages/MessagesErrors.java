@@ -6,7 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum MessagesErrors {
-    BOOK_ALREADY_REGISTERED("Livro já cadastrado");
+    BOOK_ALREADY_REGISTERED("Livro já cadastrado"),
+    BOOK_NOT_FOUND("Livro não encontrado");
 
     private final String message;
 }
