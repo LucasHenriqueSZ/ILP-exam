@@ -19,6 +19,7 @@ public class NewBook {
             throw new IllegalArgumentException(MessagesErrors.BOOK_ALREADY_REGISTERED.getMessage());
         }
         book.getStock().setBook(book);
+        book.getStock().setAvailable(book.getStock().getQuantity());
         bookRepository.save(book);
     }
 }
