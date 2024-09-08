@@ -1,5 +1,6 @@
 package com.web_exam.web_library.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -7,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.ISBN;
 
 import java.time.LocalDate;
 
@@ -43,7 +45,7 @@ public class Book {
     private String description;
 
     @NotBlank(message = "O ISBN não pode estar em branco.")
-    @Pattern(regexp = "\\d{3}-\\d-\\d{2}-\\d{6}-\\d|\\d{13}", message = "O ISBN fornecido é inválido.")
+    @ISBN(message = "O ISBN fornecido é inválido.")
     @Column(name = "bok_isbn")
     private String isbn;
 
@@ -53,6 +55,7 @@ public class Book {
     private LocalDate publicationDate;
 
     @Valid
-    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Stock stock;
 }
