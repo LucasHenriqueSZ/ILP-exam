@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,6 +43,14 @@ public class LoanController {
             attributes.addFlashAttribute("alert", e.getMessage());
             mv.setViewName("redirect:/loans/make");
         }
+        return mv;
+    }
+
+    @GetMapping
+    public ModelAndView listLoans(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "7") int size) {
+        ModelAndView mv = new ModelAndView("list_loans");
+        mv.addObject("loansPage", loanFacade.listLoans(page, size));
         return mv;
     }
 
