@@ -8,11 +8,13 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="mb-4">Cadastro de Novo Livro</h2>
+    <h2 class="mb-4" th:text="${book.id} ? 'Editar Livro' : 'Cadastro de Novo Livro'"></h2>
 
     <div th:include="fragments/alerts :: alert(${message}, ${alert})"></div>
 
-    <form th:action="@{/books/new}" th:object="${book}" method="post">
+    <form th:action="${book.id} ? @{/books/edit} : @{/books/new}" th:object="${book}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+
         <div class="mb-3">
             <label for="title" class="form-label">Título</label>
             <input type="text" class="form-control" id="title" th:field="*{title}"
@@ -40,7 +42,8 @@
         <div class="mb-3">
             <label for="publishDate" class="form-label">Data de Publicação</label>
             <input type="date" class="form-control" id="publishDate" th:field="*{publicationDate}"
-                   th:classappend="${#fields.hasErrors('publicationDate') ? 'is-invalid' : ''}">
+                   th:classappend="${#fields.hasErrors('publicationDate') ? 'is-invalid' : ''}"
+                   th:value="${book.publicationDate}">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('publicationDate')}"
                  th:errors="*{publicationDate}">Data de publicação inválida
             </div>
@@ -61,6 +64,7 @@
             </div>
         </div>
         <div class="mb-3">
+            <input type="hidden" th:field="*{stock.id}"/>
             <label for="quantity" class="form-label">Quantidade disponível</label>
             <input type="number" class="form-control" id="quantity" th:field="*{stock.quantity}"
                    placeholder="Digite a quantidade disponível"
@@ -69,7 +73,7 @@
                 Quantidade inválida
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <button type="submit" class="btn btn-primary" th:text="${book.id} ? 'Salvar' : 'Cadastrar'"></button>
     </form>
 </div>
 

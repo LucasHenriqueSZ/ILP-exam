@@ -50,7 +50,7 @@
                 <td class="text-center" th:text="${book.stock.quantity}"></td>
                 <td class="text-center">
                     <div>
-                        <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-primary btn-custom"><i
+                        <a th:href="@{/books/new?(id=${book.id})}" class="btn btn-primary btn-custom"><i
                                 class="ri-edit-line"></i> Editar</a>
                         <a th:href="@{/books/delete?(id=${book.id})}" class="btn btn-danger btn-custom"
                            onclick="return confirm('Tem certeza que deseja excluir este livro?');"><i
