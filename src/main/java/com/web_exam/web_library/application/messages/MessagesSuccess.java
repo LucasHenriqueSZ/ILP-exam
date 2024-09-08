@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum MessagesSuccess {
     BOOK_CREATED("Livro cadastrado com sucesso."),
     BOOK_DELETED("Livro excluído com sucesso."),
-    BOOK_UPDATED("Livro atualizado com sucesso.");
+    BOOK_UPDATED("Livro atualizado com sucesso."),
+    LOAN_CREATED("Empréstimo realizado com sucesso.");
 
     private final String message;
 }
