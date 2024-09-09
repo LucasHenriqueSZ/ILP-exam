@@ -7,8 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum LoanStatus {
     PENDING("Pendente"),
-    RETURNED("Devolvido"),
-    LATE("Atrasado");
+    RETURNED("Devolvido");
 
     private final String status;
 }

@@ -7,10 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,7 +33,7 @@ public class LoanController {
         }
         ModelAndView mv = new ModelAndView();
         try {
-             loanFacade.saveLoan(loan);
+            loanFacade.saveLoan(loan);
             mv.setViewName("redirect:/loans/make");
             attributes.addFlashAttribute("message", MessagesSuccess.LOAN_CREATED.getMessage());
         } catch (Exception e) {
@@ -51,6 +48,33 @@ public class LoanController {
                                   @RequestParam(defaultValue = "7") int size) {
         ModelAndView mv = new ModelAndView("list_loans");
         mv.addObject("loansPage", loanFacade.listLoans(page, size));
+        return mv;
+    }
+
+    @GetMapping("/return/{id}")
+    public ModelAndView returnLoan(@PathVariable Long id, RedirectAttributes attributes) {
+        ModelAndView mv = new ModelAndView("confirm_return");
+        try {
+            Loan loan = loanFacade.findLoanConfirmReturn(id);
+            mv.addObject("loan", loan);
+        } catch (Exception e) {
+            attributes.addFlashAttribute("alert", e.getMessage());
+            mv.setViewName("redirect:/loans");
+        }
+        return mv;
+    }
+
+    @PostMapping("/return/{id}")
+    public ModelAndView confirmReturnLoan(@PathVariable Long id, RedirectAttributes attributes) {
+        ModelAndView mv = new ModelAndView();
+        try {
+            loanFacade.confirmReturnLoan(id);
+            mv.setViewName("redirect:/loans");
+            attributes.addFlashAttribute("message", MessagesSuccess.LOAN_RETURNED.getMessage());
+        } catch (Exception e) {
+            attributes.addFlashAttribute("alert", e.getMessage());
+            mv.setViewName("redirect:/loans/return/" + id);
+        }
         return mv;
     }
 
