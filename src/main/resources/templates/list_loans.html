@@ -14,6 +14,7 @@
 
 <div class="container mt-5">
     <h2 class="mb-4 text-center">Listagem de Empréstimos</h2>
+    <div th:include="fragments/alerts :: alert(${message}, ${alert})"></div>
     <div class="table-container">
         <table class="table table-striped">
             <thead>
@@ -44,13 +45,13 @@
                       th:text="${loan.status.status}">
                 </span>
                 </td>
-                <td class="text-center" th:text="'R$ ' + ${loan.price}"></td>
+                <td class="text-center" th:text="'R$ ' + ${loan.getTotalPrice()}"></td>
                 <td class="truncate col-book-title text-center"
                     th:text="${loan.book != null ? loan.book.title : 'Sem Livro'}"></td>
                 <td class="text-center">
                     <a th:href="@{/loans/return/{id}(id=${loan.id})}" class="btn btn-info-custom"
-                       th:classappend="${loan.returnDate != null} ? 'disabled' : ''"
-                       th:text="${loan.returnDate != null ? 'Devolvido' : 'Devolver'}">
+                       th:classappend="${loan.status.status == 'Devolvido'} ? 'disabled' : ''"
+                       th:text="${loan.status.status == 'Devolvido' ? 'Devolvido' : 'Devolver'}">
                     </a>
                 </td>
             </tr>

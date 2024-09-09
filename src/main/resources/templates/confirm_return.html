@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Livros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+            href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Confirmar Devolução</h2>
+
+    <div th:include="fragments/alerts :: alert(${message}, ${alert})"></div>
+
+    <div class="alert alert-warning" role="alert">
+        <strong>Dias de empéstimo:</strong> <span th:text="${loan.getCurrentDaysLoan()}"></span>
+        <br>
+        <strong>Valor Diário:</strong> <span th:text="'R$ ' + ${loan.price}"></span>
+        <br>
+        <strong>Valor diarias:</strong> <span th:text="'R$ ' + ${loan.getDaysPrice()}"></span>
+        <br>
+        <strong>Dias de Atraso:</strong> <span th:text="${loan.getDaysLate()}"></span>
+        <br>
+        <strong>Multa:</strong> <span th:text="'R$ ' + ${loan.getFine()}"></span>
+        <hr>
+        <strong>Valor Total:</strong> <span th:text="'R$ ' + ${loan.getTotalPrice()}"></span><br>
+    </div>
+
+    <div class="mb-3">
+        <h4>Informações do Empréstimo</h4>
+        <p><strong>Nome do Mutuário:</strong> <span th:text="${loan.borrowerName}"></span></p>
+        <p><strong>CPF do Mutuário:</strong> <span th:text="${loan.borrowerCpf}"></span></p>
+        <p><strong>Data do Empréstimo:</strong> <span th:text="${loan.loanDate}"></span></p>
+        <p><strong>Data de Vencimento:</strong> <span th:text="${loan.dueDate}"></span></p>
+        <p><strong>Status:</strong> <span th:text="${loan.status.status}"></span></p>
+        <p><strong>Livro:</strong> <span th:text="${loan.book.title}"></span></p>
+        <p><strong>ISBN:</strong> <span th:text="${loan.book.isbn}"></span></p>
+        <p><strong>Disponibilidade:</strong> <span th:text="${loan.book.stock.available}+'/'+${loan.book.stock.quantity}"></span></p>
+    </div>
+
+    <div class="d-flex gap-4 align-items-center justify-content-center mb-4">
+        <form th:action="@{/loans/return/{id}(id=${loan.id})}" method="post">
+            <button type="submit" class="btn btn-primary">Confirmar Devolução</button>
+        </form>
+
+        <a class="btn btn-secondary" th:href="@{/loans}">Voltar</a>
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
