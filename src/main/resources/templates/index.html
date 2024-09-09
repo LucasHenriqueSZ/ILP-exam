@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+            href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+            rel="stylesheet"
+    />
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<section class="bg-primary text-white text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Bem-vindo à Biblioteca</h1>
+        <p class="lead">Explore nosso acervo de livros e faça empréstimos facilmente.</p>
+        <a th:href="@{/books}" class="btn btn-light btn-lg">Ver Livros</a>
+        <a th:href="@{/loans/make}" class="btn btn-outline-light btn-lg">Realizar Empréstimo</a>
+    </div>
+</section>
+
+<section class="container my-5">
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="Livros">
+                <div class="card-body">
+                    <h5 class="card-title">Explore o Acervo</h5>
+                    <p class="card-text">Encontre milhares de livros em diversas categorias. Descubra seu próximo livro
+                        favorito.</p>
+                    <a th:href="@{/books}" class="btn btn-primary">Explorar Livros</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="Empréstimos">
+                <div class="card-body">
+                    <h5 class="card-title">Gerenciar Empréstimos</h5>
+                    <p class="card-text">Acompanhe seus empréstimos, renove livros e faça devoluções de maneira fácil e
+                        rápida.</p>
+                    <a th:href="@{/loans}" class="btn btn-primary">Gerenciar Empréstimos</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="Adicionar Livro">
+                <div class="card-body">
+                    <h5 class="card-title">Adicionar um Livro</h5>
+                    <p class="card-text">Contribua para o acervo da biblioteca adicionando novos livros ao sistema de
+                        forma simples.</p>
+                    <a th:href="@{/books/new}" class="btn btn-primary">Adicionar Livro</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
