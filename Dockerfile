@@ -1,9 +1,18 @@
-FROM openjdk:22
+FROM openjdk:22-jdk-slim AS builder
 
-WORKDIR web_library
+RUN apt-get update && \
+    apt-get install -y maven && \
+    apt-get clean
 
-COPY target/*.jar /web_library/app.jar
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+FROM openjdk:22-jdk-slim
+WORKDIR /web_library
+
+COPY --from=builder /app/target/web_library-0.0.1-SNAPSHOT.jar /web_library/app.jar
 
 EXPOSE 80
 
-CMD java -XX:+UseContainerSupport -Xmx500m -jar app.jar --server.port=80
+CMD ["java", "-XX:+UseContainerSupport", "-jar", "/web_library/app.jar", "--server.port=80"]
