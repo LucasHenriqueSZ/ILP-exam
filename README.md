@@ -29,8 +29,8 @@ Follow the steps below to run the project using Docker Compose:
    Clone the project repository to your local environment:
 
    ```bash
-    git clone <URL_DO_REPOSITÓRIO>
-    cd <NOME_DO_REPOSITÓRIO>
+    git clone https://github.com/LucasHenriqueSZ/ILP-exam.git
+    cd ILP-exam
     ```
 
 2. **Start the Containers**
