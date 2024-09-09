@@ -34,4 +34,8 @@ public class Stock {
 
     @Column(name = "stk_available")
     private Integer available;
+
+    public Integer getQuantityLoaned() {
+        return quantity - available;
+    }
 }

@@ -23,7 +23,13 @@ public class EditBook {
                 throw new IllegalArgumentException(MessagesErrors.BOOK_ALREADY_REGISTERED.getMessage());
             }
         });
+
+        if (book.getStock().getQuantity() < bookFound.getStock().getQuantityLoaned()) {
+            throw new IllegalArgumentException("A quantidade de estoque não pode ser menor do que a quantidade emprestada.");
+        }
+
         book.getStock().setBook(book);
+        book.getStock().setAvailable(book.getStock().getQuantity() - bookFound.getStock().getQuantityLoaned());
         bookRepository.save(book);
     }
 }
