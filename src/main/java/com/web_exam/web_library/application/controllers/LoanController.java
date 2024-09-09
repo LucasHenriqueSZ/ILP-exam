@@ -34,7 +34,7 @@ public class LoanController {
         ModelAndView mv = new ModelAndView();
         try {
             loanFacade.saveLoan(loan);
-            mv.setViewName("redirect:/loans/make");
+            mv.setViewName("redirect:/loans");
             attributes.addFlashAttribute("message", MessagesSuccess.LOAN_CREATED.getMessage());
         } catch (Exception e) {
             attributes.addFlashAttribute("alert", e.getMessage());
