@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
@@ -47,9 +48,6 @@ public class Loan {
     @Column(name = "lon_status")
     private LoanStatus status;
 
-    @Column(name = "lon_late")
-    private boolean late;
-
     @Column(name = "lon_price")
     @NotNull(message = "O preço do empréstimo não pode ser nulo.")
     @Positive(message = "O preço do empréstimo não pode ser negativo.")
@@ -59,4 +57,28 @@ public class Loan {
     @JoinColumn(name = "bok_id")
     @NotNull(message = "O empréstimo deve estar associado a um livro.")
     private Book book;
+
+    private LocalDate getEffectiveEndDate() {
+        return (returnDate != null) ? returnDate : LocalDate.now();
+    }
+
+    public Integer getCurrentDaysLoan() {
+        return (int) ChronoUnit.DAYS.between(loanDate, getEffectiveEndDate());
+    }
+
+    public Integer getDaysLate() {
+        return Math.max(0, (int) ChronoUnit.DAYS.between(dueDate, getEffectiveEndDate()));
+    }
+
+    public Double getDaysPrice() {
+        return price * getCurrentDaysLoan();
+    }
+
+    public Double getFine() {
+        return (getDaysLate() > 0) ? getDaysLate() * 0.80 : 0.0;
+    }
+
+    public Double getTotalPrice() {
+        return price * getCurrentDaysLoan() + getFine();
+    }
 }
