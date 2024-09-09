@@ -43,8 +43,8 @@
             <tbody>
             <tr th:each="book : ${booksPage.content}">
                 <td class="text-center" th:text="${book.id}"></td>
-                <td class="text-center" th:text="${book.title}"></td>
-                <td class="text-center" th:text="${book.author}"></td>
+                <td class="truncate col-book-title text-center" th:text="${book.title}"></td>
+                <td class="truncate col-borrower-name text-center" th:text="${book.author}"></td>
                 <td class="text-center" th:text="${book.gender}"></td>
                 <td class="text-center" th:text="${book.isbn}"></td>
                 <td class="text-center" th:text="${book.stock.available}+'/'+${book.stock.quantity}"></td>
