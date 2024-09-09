@@ -3,14 +3,11 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/web_library
-    username: web_library_user
-    password: web_library_123
+#    url: jdbc:mysql://mysql:3306/web_library
+#    username: web_library_user
+#    password: web_library_123
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update
-  sql:
-    init:
-      mode: always
+      ddl-auto: none
